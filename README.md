@@ -107,3 +107,6 @@ If you would like to change the templated solution files, the template is found 
 * Criterion (Benchmarking) integration
 * Ability to run all days sequentially
 * Optionally pprint solution output
+* More emojis ☃️
+* Better output formatting
+* Provide a filter for only running particular tests

@@ -1,0 +1,28 @@
+{:paths ["script"]
+ :deps {lread/status-line {:git/url "https://github.com/lread/status-line.git"
+                           :sha "35ed39645038e81b42cb15ed6753b8462e60a06d"}}
+ :tasks {:requires ([clojure.string :as string]
+                    [lread.status-line :as status]
+                    [babashka.fs :as fs]
+                    [api])
+         :enter (let [{:keys [name]} (current-task)] (status/line :head "TASK %s %s" name (pr-str *command-line-args*)))
+         :leave (let [{:keys [name]} (current-task)] (status/line :detail "\nTASK %s done." name))
+         -input-dir "input"
+         -input {:depends [-input-dir]
+                 :task (fs/create-dirs -input-dir)}
+         -auth-file "auth.edn"
+         get {:doc "Fetches a specific input (defaults to today)"
+              :depends [-auth-file -input]
+              :task (api/download-input-task -auth-file -input *command-line-args*)}
+         new {:doc "Creates a skeleton solution for a specific day"
+              :task "todo"}
+         run {:doc "Executes the solution against the input"
+              :task "todo"}
+         test {:doc "Tests the solution agaist a sample"
+               :task "todo"}
+         auth {:doc "Set the auth for the Advent of Code API"
+               :depends [-auth-file]
+               :task (api/store-auth-task -auth-file *command-line-args*)}
+         t (println "t" (util/get-current-day) (util/get-current-month))
+         d util/get-current-day
+         r (println 1)}}

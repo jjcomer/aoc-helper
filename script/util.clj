@@ -25,3 +25,14 @@
     :validate [parse-long "Day must be an integer"
                #(<= 1 (parse-long %) 25) "Day must be between 1 and 25"]]
    ["-h" "--help"]])
+
+(defn gen-solution-ns
+  [year day]
+  (symbol (str "y" year ".d" day)))
+
+(defn print-errors
+  [errors summary]
+  (doseq [e errors]
+    (println e))
+  (println)
+  (println summary))

@@ -2,7 +2,8 @@
  :tasks {:requires ([clojure.string :as string]
                     [babashka.fs :as fs]
                     [api]
-                    [generate])
+                    [generate]
+                    [runner])
          -input-dir "input"
          -input {:depends [-input-dir]
                  :task (fs/create-dirs -input-dir)}
@@ -15,9 +16,10 @@
               :depends [-solution-template-file]
               :task (generate/generate-solution-task -solution-template-file *command-line-args*)}
          run {:doc "Executes the solution against the input"
-              :task "todo"}
+              :depends [-auth-file -input]
+              :task (runner/run-solution-task -auth-file -input *command-line-args*)}
          test {:doc "Tests the solution agaist a sample"
-               :task "todo"}
+               :task (runner/run-tests-task *command-line-args*)}
          auth {:doc "Set the auth for the Advent of Code API"
                :depends [-auth-file]
                :task (api/store-auth-task -auth-file *command-line-args*)}

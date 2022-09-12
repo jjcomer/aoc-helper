@@ -52,9 +52,7 @@
       (println summary)
 
       (seq errors)
-      (do (doseq [e errors]
-            (println "ERROR:" e))
-          (println "\n" summary))
+      (util/print-errors errors summary)
 
       :else
       (download-input auth-file input-dir (:year options) (:day options)))))
@@ -74,10 +72,7 @@
       (println summary)
 
       (seq errors)
-      (do
-        (doseq [e errors]
-          (println "ERROR:" e))
-        (println "\n" summary))
+      (util/print-errors errors summary)
 
       :else
       (store-auth auth-file (:year options) (:session options)))))

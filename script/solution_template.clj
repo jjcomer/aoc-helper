@@ -1,4 +1,4 @@
-(ns __NAMESPACE__
+(ns y__YEAR__.d__DAY__
   (:require [clojure.test :as t :refer [deftest]]))
 
 ;; PROBLEM LINK https://adventofcode.com/__YEAR__/day/__DAY__

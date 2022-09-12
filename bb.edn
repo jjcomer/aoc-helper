@@ -1,21 +1,19 @@
-{:paths ["script"]
- :deps {lread/status-line {:git/url "https://github.com/lread/status-line.git"
-                           :sha "35ed39645038e81b42cb15ed6753b8462e60a06d"}}
+{:paths ["script" "src"]
  :tasks {:requires ([clojure.string :as string]
-                    [lread.status-line :as status]
                     [babashka.fs :as fs]
-                    [api])
-         :enter (let [{:keys [name]} (current-task)] (status/line :head "TASK %s %s" name (pr-str *command-line-args*)))
-         :leave (let [{:keys [name]} (current-task)] (status/line :detail "\nTASK %s done." name))
+                    [api]
+                    [generate])
          -input-dir "input"
          -input {:depends [-input-dir]
                  :task (fs/create-dirs -input-dir)}
          -auth-file "auth.edn"
+         -solution-template-file "script/solution_template.clj"
          get {:doc "Fetches a specific input (defaults to today)"
               :depends [-auth-file -input]
               :task (api/download-input-task -auth-file -input *command-line-args*)}
          new {:doc "Creates a skeleton solution for a specific day"
-              :task "todo"}
+              :depends [-solution-template-file]
+              :task (generate/generate-solution-task -solution-template-file *command-line-args*)}
          run {:doc "Executes the solution against the input"
               :task "todo"}
          test {:doc "Tests the solution agaist a sample"

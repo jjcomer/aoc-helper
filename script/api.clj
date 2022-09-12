@@ -4,7 +4,7 @@
             [babashka.fs :as fs]
             [clojure.tools.cli :as cli]
             [util]
-            [babashka.curl :as curl]))
+            [org.httpkit.client :as http]))
 
 (defn read-auth
   [auth-file]
@@ -38,7 +38,7 @@
         (println "Input for year" year "and day" day "has already been fetched")
         (let [url (format "https://adventofcode.com/%s/day/%s/input" year day)
               _ (println "Fetching:" url)
-              input (curl/get url {:headers {"Cookie" (str "session=" session)}})]
+              input @(http/get url {:headers {"Cookie" (str "session=" session)}})]
           (when-not (fs/exists? base-path)
             (fs/create-dir base-path))
           (spit (str input-path) (:body input))

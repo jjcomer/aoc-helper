@@ -1,6 +1,6 @@
 {:paths ["script" "src"]
- :tasks {:requires ([clojure.string :as string]
-                    [babashka.fs :as fs]
+ :deps {}
+ :tasks {:requires ([babashka.fs :as fs]
                     [api]
                     [generate]
                     [runner])
@@ -22,7 +22,4 @@
                :task (runner/run-tests-task *command-line-args*)}
          auth {:doc "Set the auth for the Advent of Code API"
                :depends [-auth-file]
-               :task (api/store-auth-task -auth-file *command-line-args*)}
-         t (println "t" (util/get-current-day) (util/get-current-month))
-         d util/get-current-day
-         r (println 1)}}
+               :task (api/store-auth-task -auth-file *command-line-args*)}}}

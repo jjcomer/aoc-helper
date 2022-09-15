@@ -41,7 +41,7 @@ In order to be able to pull input for your puzzles you will need to provide your
 Once you have your token, you will need to store the value for the scipts to use. This is done using the `auth` command:
 
 ```shell
-$ bb auth -y <YEAR> -s <SESSION TOKEN>
+$ bb auth :year <YEAR> :session <SESSION TOKEN>
 ```
 
 If you don't specify a year, the script will assume the current year. You can store session tokens for multiple years within the same repo.
@@ -55,7 +55,7 @@ When you are ready to start solving a problem the framework can generate a start
 To create a new solution file execute the `new` task:
 
 ```shell
-$ bb new -y <YEAR> -d <DAY>
+$ bb new :year <YEAR> :day <DAY>
 ```
 
 This will create a new file under `src/y<YEAR>/d<DAY>.clj`
@@ -65,7 +65,7 @@ This will create a new file under `src/y<YEAR>/d<DAY>.clj`
 Your puzzle input can be downloaded directly from AOC. Using the `get` task you can pull any available input. With no parameters the input for today will be pulled.
 
 ```shell
-$ bb get -y <YEAR> -d <DAY>
+$ bb get :year <YEAR> :day <DAY>
 ```
 
 If the input has already been pulled, the task will not re-pull the input.
@@ -77,7 +77,7 @@ A `clojure.test` runner has also been included if you want to write tests agains
 All tests in the solution's namespace will be executed. To run your tests use the `test` task.
 
 ```shell
-$ bb test -y <YEAR> -d <DAY>
+$ bb test :year <YEAR> :day <DAY>
 ```
 
 ### Running your Solution
@@ -85,7 +85,7 @@ $ bb test -y <YEAR> -d <DAY>
 When you are ready to run your solution, the framework is ready to help with the `run` task. This task will check for input and automatically download if missing. The input will be passed to the generator fn within your ns. The result of the generator will be passed to both the `part-1` and `part-2` solving functions. The result of both functions will be printed. If no parameters are passed today's date will be used.
 
 ```shell
-$ bb run -y <YEAR> -d <DAY>
+$ bb run :year <YEAR> :day <DAY>
 ```
 
 ### Adding Dependencies
@@ -100,7 +100,7 @@ If you would like to change the templated solution files, the template is found 
 
 ## Future Features
 
-* Allow for using JVM clojure (for more speed)
+* ~~Allow for using JVM clojure (for more speed)~~
 * Support for multiple solutions per-day
 * Switch to macros for defining generators
 * Switch to macros for defining solvers
@@ -112,3 +112,10 @@ If you would like to change the templated solution files, the template is found 
 * Provide a filter for only running particular tests
 * Add docs for connecting REPLs
 * Add docs on finding session cookie
+
+## Changelog
+
+### 2022-09-14
+* Changed over to execute using the JVM (will add back BB execution)
+* *Breaking* changed the parameters to keywords and updated documentation
+* Added `.tools-version` file to help choose a compatible jvm

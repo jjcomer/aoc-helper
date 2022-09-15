@@ -1,8 +1,8 @@
-(ns generate
+(ns script.generate
   (:require [babashka.fs :as fs]
             [clojure.tools.cli :as cli]
             [clojure.string :as str]
-            [util]))
+            [script.util :as util]))
 
 (defn generate-solution
   [solution-template year day]

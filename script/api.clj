@@ -1,9 +1,9 @@
-(ns api
+(ns script.api
   (:require [clojure.edn :as edn]
             [clojure.string :as str]
             [babashka.fs :as fs]
             [clojure.tools.cli :as cli]
-            [util]
+            [script.util :as util]
             [org.httpkit.client :as http]))
 
 (defn read-auth

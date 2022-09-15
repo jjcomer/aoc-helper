@@ -1,9 +1,6 @@
-{:paths ["script" "src"]
+{:paths ["src" "script"]
  :deps {}
- :tasks {:requires ([babashka.fs :as fs]
-                    [api]
-                    [generate]
-                    [runner])
+ :tasks {:requires ([babashka.fs :as fs])
          -input-dir "input"
          -input {:depends [-input-dir]
                  :task (fs/create-dirs -input-dir)}
@@ -11,15 +8,26 @@
          -solution-template-file "script/solution_template.clj"
          get {:doc "Fetches a specific input (defaults to today)"
               :depends [-auth-file -input]
-              :task (api/download-input-task -auth-file -input *command-line-args*)}
+              :task (clojure (format "-T:aoc get-input :auth-file %s :input-dir %s %s"
+                                     -auth-file
+                                     -input
+                                     (apply str (interpose " " *command-line-args*))))}
          new {:doc "Creates a skeleton solution for a specific day"
               :depends [-solution-template-file]
-              :task (generate/generate-solution-task -solution-template-file *command-line-args*)}
+              :task (clojure (format "-T:aoc gen-new :solution-template %s %s"
+                                     -solution-template-file
+                                     (apply str (interpose " " *command-line-args*))))}
          run {:doc "Executes the solution against the input"
               :depends [-auth-file -input]
-              :task (runner/run-solution-task -auth-file -input *command-line-args*)}
+              :task (clojure (format "-T:aoc run-solution :input-dir %s :auth-file %s %s"
+                                     -input
+                                     -auth-file
+                                     (apply str (interpose " " *command-line-args*))))}
          test {:doc "Tests the solution agaist a sample"
-               :task (runner/run-tests-task *command-line-args*)}
+               :task (clojure (format "-T:aoc run-tests %s"
+                                      (apply str (interpose " " *command-line-args*))))}
          auth {:doc "Set the auth for the Advent of Code API"
                :depends [-auth-file]
-               :task (api/store-auth-task -auth-file *command-line-args*)}}}
+               :task (clojure (format "-T:aoc store-auth :auth-file %s %s"
+                                      -auth-file
+                                      (apply str (interpose " " *command-line-args*))))}}}

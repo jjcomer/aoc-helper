@@ -1,9 +1,9 @@
-(ns runner
+(ns script.runner
   (:require [clojure.tools.cli :as cli]
             [clojure.test :as test]
             [babashka.fs :as fs]
-            [util]
-            [api]))
+            [script.util :as util]
+            [script.api :as api]))
 
 (defn get-input
   [auth-file input-dir year day]

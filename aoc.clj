@@ -33,8 +33,8 @@
                       (str year)
                       (str day)))
 
-(defn store-auth [{:keys [auth-file year session]
-                   :or {year (util/get-current-year)}}]
-  (api/store-auth (str auth-file)
-                  (str year)
-                  (str session)))
+(defn store-auth [{:keys [auth-file args]}]
+  (let [args (apply hash-map args)]
+    (api/store-auth (str auth-file)
+                    (str (get args ":year" (util/get-current-year)))
+                    (str (get args ":session")))))

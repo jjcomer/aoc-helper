@@ -28,6 +28,6 @@
                                       (apply str (interpose " " *command-line-args*))))}
          auth {:doc "Set the auth for the Advent of Code API"
                :depends [-auth-file]
-               :task (clojure (format "-T:aoc store-auth :auth-file %s %s"
+               :task (clojure (format "-T:aoc store-auth :auth-file %s :args %s"
                                       -auth-file
-                                      (apply str (interpose " " *command-line-args*))))}}}
+                                      (pr-str (pr-str *command-line-args*))))}}}

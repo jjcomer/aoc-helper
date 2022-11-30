@@ -12,6 +12,15 @@
                        (str year)
                        (str day)))
 
+(defn bench-solution [{:keys [input-dir auth-file year day part]
+                       :or {year (util/get-current-year)
+                            day (util/get-current-day)}}]
+  (runner/bench-solution (str auth-file)
+                         (str input-dir)
+                         (str year)
+                         (str day)
+                         (str part)))
+
 (defn run-tests [{:keys [year day]
                   :or {year (util/get-current-year)
                        day (util/get-current-day)}}]

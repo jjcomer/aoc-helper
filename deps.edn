@@ -3,5 +3,6 @@
  :aliases {:aoc {:ns-default aoc
                  :extra-paths ["script" "src"]
                  :extra-deps {babashka/fs {:mvn/version "0.1.11"}
+                              criterium/criterium {:mvn/version "0.4.6"}
                               org.clojure/tools.cli {:mvn/version "1.0.206"}
                               http-kit/http-kit {:mvn/version "2.6.0"}}}}}

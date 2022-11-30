@@ -3,7 +3,8 @@
             [clojure.test :as test]
             [babashka.fs :as fs]
             [script.util :as util]
-            [script.api :as api]))
+            [script.api :as api]
+            [criterium.core :as c]))
 
 (defn get-input
   [auth-file input-dir year day]
@@ -34,6 +35,21 @@
     (println "PART 2 SOLUTION:")
     (let [part2-solution (time (part2-fn parsed-input))]
       (println part2-solution))))
+
+(defn bench-solution
+  [auth-file input-dir year day part]
+  (let [input (get-input auth-file input-dir year day)
+        solution-ns (util/gen-solution-ns year day)
+        _ (require solution-ns)
+        generator-fn (ns-resolve solution-ns 'generator)
+        _ (println "Generating Input")
+        parsed-input (time (generator-fn input))
+        fn-to-test (case part
+                     "1" (ns-resolve solution-ns 'solve-part-1)
+                     "2" (ns-resolve solution-ns 'solve-part-2))]
+    (println)
+    (println "BENCHMARKING PART" part)
+    (c/with-progress-reporting (c/quick-bench (fn-to-test parsed-input)))))
 
 (defn run-solution-task
   [auth-file input-dir params]

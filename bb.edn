@@ -23,6 +23,12 @@
                                      -input
                                      -auth-file
                                      (apply str (interpose " " *command-line-args*))))}
+         bench {:doc "Benchmarks the solution against the input"
+                :depends [-auth-file -input]
+                :task (clojure (format "-T:aoc bench-solution :input-dir %s :auth-file %s %s"
+                                       -input
+                                       -auth-file
+                                       (apply str (interpose " " *command-line-args*))))}
          test {:doc "Tests the solution agaist a sample"
                :task (clojure (format "-T:aoc run-tests %s"
                                       (apply str (interpose " " *command-line-args*))))}

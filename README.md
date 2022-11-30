@@ -115,6 +115,10 @@ If you would like to change the templated solution files, the template is found 
 
 ## Changelog
 
+### 2022-11-30
+* Added `bench` task using criterium to benchmark solution time
+* Added section for generator logic to the solution template
+
 ### 2022-09-14
 * Changed over to execute using the JVM (will add back BB execution)
 * *Breaking* changed the parameters to keywords and updated documentation

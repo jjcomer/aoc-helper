@@ -3,6 +3,8 @@
 
 ;; PROBLEM LINK https://adventofcode.com/__YEAR__/day/__DAY__
 
+;; Generator Logic
+
 ;; Solution Logic
 
 ;; Entry Points

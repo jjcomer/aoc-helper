@@ -115,6 +115,9 @@ If you would like to change the templated solution files, the template is found 
 
 ## Changelog
 
+### 2022-12-01
+* Update User-Agent as per [request](https://www.reddit.com/r/adventofcode/comments/z9dhtd/please_include_your_contact_info_in_the_useragent/)
+
 ### 2022-11-30
 * Added `bench` task using criterium to benchmark solution time
 * Added section for generator logic to the solution template

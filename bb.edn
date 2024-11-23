@@ -1,6 +1,11 @@
 {:paths ["src" "script"]
- :deps {}
- :tasks {:requires ([babashka.fs :as fs])
+ :deps {aysylu/loom {:mvn/version "1.0.2"}
+        org.clojure/math.numeric-tower {:mvn/version "0.0.5"}
+        org.clojure/data.priority-map {:mvn/version "1.2.0"}
+        org.clojure/core.memoize {:mvn/version "1.1.266"}
+        org.flatland/ordered {:mvn/version "1.15.12"}}
+ :tasks {:requires ([babashka.fs :as fs]
+                    [aoc]) 
          -input-dir "input"
          -input {:depends [-input-dir]
                  :task (fs/create-dirs -input-dir)}
@@ -8,32 +13,15 @@
          -solution-template-file "script/solution_template.clj"
          get {:doc "Fetches a specific input (defaults to today)"
               :depends [-auth-file -input]
-              :task (clojure (format "-T:aoc get-input :auth-file %s :input-dir %s %s"
-                                     -auth-file
-                                     -input
-                                     (apply str (interpose " " *command-line-args*))))}
+              :task (aoc/get-input-task -auth-file -input *command-line-args*)}
          new {:doc "Creates a skeleton solution for a specific day"
               :depends [-solution-template-file]
-              :task (clojure (format "-T:aoc gen-new :solution-template %s %s"
-                                     -solution-template-file
-                                     (apply str (interpose " " *command-line-args*))))}
-         run {:doc "Executes the solution against the input"
-              :depends [-auth-file -input]
-              :task (clojure (format "-T:aoc run-solution :input-dir %s :auth-file %s %s"
-                                     -input
-                                     -auth-file
-                                     (apply str (interpose " " *command-line-args*))))}
-         bench {:doc "Benchmarks the solution against the input"
-                :depends [-auth-file -input]
-                :task (clojure (format "-T:aoc bench-solution :input-dir %s :auth-file %s %s"
-                                       -input
-                                       -auth-file
-                                       (apply str (interpose " " *command-line-args*))))}
+              :task (aoc/gen-new-task -solution-template-file *command-line-args*)}
+         solve {:doc "Executes the solution against the input"
+                :depends [-auth-file -input] 
+                :task (aoc/solve-task -input -auth-file *command-line-args*)} 
          test {:doc "Tests the solution agaist a sample"
-               :task (clojure (format "-T:aoc run-tests %s"
-                                      (apply str (interpose " " *command-line-args*))))}
+               :task (aoc/run-tests-task *command-line-args*)}
          auth {:doc "Set the auth for the Advent of Code API"
                :depends [-auth-file]
-               :task (clojure (format "-T:aoc store-auth :auth-file %s :args %s"
-                                      -auth-file
-                                      (pr-str (pr-str *command-line-args*))))}}}
+               :task (aoc/store-auth-task -auth-file *command-line-args*)}}}

@@ -115,6 +115,10 @@ If you would like to change the templated solution files, the template is found 
 
 ## Changelog
 
+### 2024-11-23
+* Changed all execution to babashka
+* Removed benchmarking as it does not work on GraalVM
+
 ### 2022-12-01
 * Update User-Agent as per [request](https://www.reddit.com/r/adventofcode/comments/z9dhtd/please_include_your_contact_info_in_the_useragent/)
 

@@ -1,8 +1,7 @@
-(ns script.generate
-  (:require [babashka.fs :as fs]
-            [clojure.tools.cli :as cli]
+(ns generate
+  (:require [babashka.fs :as fs] 
             [clojure.string :as str]
-            [script.util :as util]))
+            [util]))
 
 (defn generate-solution
   [solution-template year day]
@@ -18,23 +17,11 @@
           (fs/create-dir solution-path))
         (-> solution-template
             slurp
-            (str/replace #"__YEAR__" year)
-            (str/replace #"__DAY__" day)
+            (str/replace #"__YEAR__" (str year))
+            (str/replace #"__DAY__" (str day))
             (#(spit (str full-path) %)))
         (println "Created template for year" year "and day" day "at" (str full-path))))))
 
-(defn generate-solution-task
-  [solution-template params]
-  (let [{:keys [summary options errors]} (cli/parse-opts params util/general-input-params)]
-    (cond
-      (:help options)
-      (println summary)
-
-      (seq errors)
-      (util/print-errors errors summary)
-
-      :else
-      (generate-solution solution-template (:year options) (:day options)))))
 
 
 

@@ -3,9 +3,10 @@
         org.clojure/math.numeric-tower {:mvn/version "0.0.5"}
         org.clojure/data.priority-map {:mvn/version "1.2.0"}
         org.clojure/core.memoize {:mvn/version "1.1.266"}
-        org.flatland/ordered {:mvn/version "1.15.12"}}
+        org.flatland/ordered {:mvn/version "1.15.12"}
+        io.github.paintparty/bling {:mvn/version "0.4.2"}}
  :tasks {:requires ([babashka.fs :as fs]
-                    [aoc]) 
+                    [aoc])
          -input-dir "input"
          -input {:depends [-input-dir]
                  :task (fs/create-dirs -input-dir)}
@@ -18,8 +19,8 @@
               :depends [-solution-template-file]
               :task (aoc/gen-new-task -solution-template-file *command-line-args*)}
          solve {:doc "Executes the solution against the input"
-                :depends [-auth-file -input] 
-                :task (aoc/solve-task -input -auth-file *command-line-args*)} 
+                :depends [-auth-file -input]
+                :task (aoc/solve-task -input -auth-file *command-line-args*)}
          test {:doc "Tests the solution agaist a sample"
                :task (aoc/run-tests-task *command-line-args*)}
          auth {:doc "Set the auth for the Advent of Code API"

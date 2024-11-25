@@ -1,6 +1,7 @@
 (ns util
   (:import java.time.LocalDate)
-  (:require [babashka.cli :as cli]))
+  (:require [babashka.cli :as cli]
+            [clojure.string :as str]))
 
 (defn get-current-day
   "Returns the numeric value of the day"
@@ -46,3 +47,10 @@
              :help {:alias :h}}
             {:day (get-current-day)
              :year (get-current-year)}))
+
+(defmacro time-execution
+  [& body]
+  `(let [s# (new java.io.StringWriter)]
+     (binding [*out* s#]
+       (hash-map :return (time ~@body)
+                 :time   (str/trim (str s#))))))

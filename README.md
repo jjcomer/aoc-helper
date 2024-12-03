@@ -1,5 +1,7 @@
 # aoc-helper
 
+Check out the new version of AOC-Helper which is now a library and much easier to setup: https://github.com/jjcomer/aoc-clj-elf
+
 ## Overview 
 Clojure based [AOC](http://adventofcode.com) helper.
 

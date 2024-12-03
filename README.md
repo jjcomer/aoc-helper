@@ -85,7 +85,7 @@ $ bb test :year <YEAR> :day <DAY>
 When you are ready to run your solution, the framework is ready to help with the `run` task. This task will check for input and automatically download if missing. The input will be passed to the generator fn within your ns. The result of the generator will be passed to both the `part-1` and `part-2` solving functions. The result of both functions will be printed. If no parameters are passed today's date will be used.
 
 ```shell
-$ bb run :year <YEAR> :day <DAY>
+$ bb solve :year <YEAR> :day <DAY>
 ```
 
 ### Adding Dependencies
